@@ -35,8 +35,6 @@ if __name__ == '__main__':
 	#encoding handling
 	reload(sys)
 	sys.setdefaultencoding('utf-8')
-	gatherproxy = GatherProxy()
-	gatherproxy.getlist()
 	#the page you want to fetch
 	target_url = 'https://twitter.com/'
 	#local proxy list
