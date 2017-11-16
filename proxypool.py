@@ -2,11 +2,13 @@
 # -*- coding: utf-8 -*-
 import requests, sys
 from proxylist import ProxyList
+from gatherproxy import GatherProxy
 
 class proxypool(object):
 	def __init__(self,file_path):
 		self.pl = ProxyList()
 		self.proxy_file = file_path
+		#self.refreshProxy()
 	def loadProxy(self):
 		self.pl.load_file(self.proxy_file)
 		self.pl.random()
@@ -14,6 +16,12 @@ class proxypool(object):
 		if(len(self.pl)==0):
 			self.loadProxy()
 		return self.pl.random().address()
+	def refreshProxy(self):
+		gatherproxy = GatherProxy()
+		f = open('proxy.txt', 'w')
+		for proxy in gatherproxy.getlist():
+			f.write(proxy+'\n')
+		f.close()
 
 class fetchweb(object):
 	def __init__(self,target_url,proxy):
@@ -43,7 +51,7 @@ if __name__ == '__main__':
 	#get proxy
 	proxy = pp.getProxy()
 	fw = fetchweb(target_url,proxy)
-	f = open('result', 'w')
+	f = open('result.html', 'w')
 	#fetch and write result
 	f.write(fw.fetch())
 	f.close()
